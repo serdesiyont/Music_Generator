@@ -2,7 +2,7 @@ import { type NextRequest, NextResponse } from "next/server"
 
 export async function POST(request: NextRequest) {
   try {
-    const { verse, idea, sessionId, model = "V4" } = await request.json()
+    const { verse, idea, sessionId, model = "V4", instrumental = false } = await request.json()
 
     if (!verse) {
       return NextResponse.json({ error: "Verse is required" }, { status: 400 })
@@ -26,19 +26,14 @@ export async function POST(request: NextRequest) {
     // Trim verse to API limit
     const musicPrompt = verse.length > 400 ? verse.substring(0, 397) + "..." : verse
 
-    // Get the base URL for the callback
-    const baseUrl = process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}`
-      : process.env.NODE_ENV === "production"
-        ? request.headers.get("host")
-          ? `https://${request.headers.get("host")}`
-          : "https://your-app.vercel.app"
-        : "http://localhost:3000"
+    // Use your deployed Vercel app URL as the callback
+    const baseUrl = "https://v0-gemini-verse-generator.vercel.app"
 
     console.log("=== SUNO API DEBUG ===")
     console.log("Base URL:", baseUrl)
     console.log("Session ID:", sessionId)
     console.log("Model:", model)
+    console.log("Instrumental:", instrumental)
     console.log("Prompt length:", musicPrompt.length)
     console.log("Prompt:", musicPrompt)
 
@@ -47,7 +42,7 @@ export async function POST(request: NextRequest) {
       prompt: musicPrompt,
       model: model, // Required: V3_5, V4, or V4_5
       customMode: false,
-      instrumental: false, // Required: true for instrumental, false for vocals
+      instrumental: instrumental, // Required: true for instrumental, false for vocals
       callBackUrl: `${baseUrl}/api/music-callback?sessionId=${sessionId}`,
     }
 
@@ -138,6 +133,7 @@ export async function POST(request: NextRequest) {
           sessionId: sessionId,
           callbackUrl: `${baseUrl}/api/music-callback?sessionId=${sessionId}`,
           model: model,
+          instrumental: instrumental,
         })
       }
 

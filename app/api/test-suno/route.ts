@@ -2,7 +2,7 @@ import { type NextRequest, NextResponse } from "next/server"
 
 export async function GET(request: NextRequest) {
   try {
-    console.log("=== SUNO API TEST WITH ALL REQUIRED PARAMS ===")
+    console.log("=== SUNO API TEST WITH PRODUCTION CALLBACK URL ===")
 
     if (!process.env.SUNO_API_KEY) {
       return NextResponse.json({
@@ -11,15 +11,8 @@ export async function GET(request: NextRequest) {
       })
     }
 
-    // Get the base URL for callback
-    const baseUrl = process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}`
-      : process.env.NODE_ENV === "production"
-        ? request.headers.get("host")
-          ? `https://${request.headers.get("host")}`
-          : "https://your-app.vercel.app"
-        : "http://localhost:3000"
-
+    // Use your deployed Vercel app URL as the callback
+    const baseUrl = "https://v0-gemini-verse-generator.vercel.app"
     const testSessionId = `test_${Date.now()}`
     const testPrompt = "A simple test song about happiness"
 
@@ -62,14 +55,15 @@ export async function GET(request: NextRequest) {
       rawResponse: responseText,
       parsedResponse: parsedResponse,
       requestSent: requestBody,
-      callbackUrl: `${baseUrl}/api/music-callback?sessionId=${testSessionId}`,
+      productionCallbackUrl: `${baseUrl}/api/music-callback?sessionId=${testSessionId}`,
       requiredParams: {
         prompt: "✓ Included",
         model: "✓ Included (V4)",
         customMode: "✓ Included (false)",
         instrumental: "✓ Included (false)",
-        callBackUrl: "✓ Included",
+        callBackUrl: "✓ Production URL",
       },
+      note: "Using production callback URL: https://v0-gemini-verse-generator.vercel.app",
     })
   } catch (error: any) {
     console.error("Test error:", error)
