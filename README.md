@@ -2,7 +2,7 @@
 
 Transform your creative ideas into beautiful verses and then into music using AI! This application combines Google's Gemini AI for verse generation with Suno AI for music creation.
 
-![Gemini Verse Generator](https://v0-gemini-verse-generator.vercel.app)
+
 
 ## ✨ Features
 
@@ -16,10 +16,6 @@ Transform your creative ideas into beautiful verses and then into music using AI
 - **🎧 In-browser Playback**: Listen to your music immediately
 - **💾 Download Support**: Download your generated music files
 
-## 🚀 Live Demo
-
-Visit the live application: [https://v0-gemini-verse-generator.vercel.app](https://v0-gemini-verse-generator.vercel.app)
-
 ## 🛠️ Setup Instructions
 
 ### Prerequisites
@@ -31,7 +27,7 @@ Visit the live application: [https://v0-gemini-verse-generator.vercel.app](https
 ### 1. Clone the Repository
 
 \`\`\`bash
-git clone https://github.com/your-username/Music_Generator.git
+[git clone https://github.com/your-username/Music_Generator.git](https://github.com/serdesiyont/Music_Generator.git)
 cd Music_Generator
 \`\`\`
 
@@ -125,7 +121,6 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ### Callback System
 The application uses a sophisticated callback system:
-- **Production URL**: `https://v0-gemini-verse-generator.vercel.app/api/music-callback`
 - **Real-time Polling**: Checks for completed music every 2 seconds
 - **Session Management**: Each user gets a unique session ID for tracking
 
@@ -262,7 +257,6 @@ If you encounter issues:
 
 - [Google Gemini AI](https://ai.google.dev/) for verse generation
 - [Suno AI](https://suno.ai/) for music creation
-- [Vercel](https://vercel.com/) for hosting and deployment
 - [shadcn/ui](https://ui.shadcn.com/) for beautiful UI components
 
 ---
